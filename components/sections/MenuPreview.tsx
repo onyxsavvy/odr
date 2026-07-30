@@ -15,32 +15,32 @@ const menuItems = [
     name: "Paneer Tikka",
     note: "The one everyone orders twice",
     tag: "Veg",
-    img: "https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?q=80&w=2000&auto=format&fit=crop"
+    img: "https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?q=80&w=2000&auto=format&fit=crop",
   },
   {
     name: "Chicken Tikka",
     note: "Smoky, straight off the grill",
     tag: "Non-Veg",
-    img: "https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?q=80&w=2000&auto=format&fit=crop" // Placeholder
+    img: "https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?q=80&w=2000&auto=format&fit=crop", // Placeholder
   },
   {
     name: "Veg Biryani",
     note: "A house favourite",
     tag: "Veg",
-    img: "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?q=80&w=2000&auto=format&fit=crop"
+    img: "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?q=80&w=2000&auto=format&fit=crop",
   },
   {
     name: "Chicken Coleslaw Salad",
     note: "Light, crunchy, a reviewer favourite",
     tag: "Non-Veg",
-    img: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=2000&auto=format&fit=crop"
+    img: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=2000&auto=format&fit=crop",
   },
   {
     name: "Wood-Fired Pizza",
     note: "Because sometimes you just want pizza with a view",
     tag: "Veg/Non-Veg",
-    img: "https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=2000&auto=format&fit=crop"
-  }
+    img: "https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=2000&auto=format&fit=crop",
+  },
 ];
 
 export default function MenuPreview() {
@@ -57,15 +57,16 @@ export default function MenuPreview() {
 
       if (totalScrollWidth > 0) {
         gsap.to(scrollContainer, {
-          x: -totalScrollWidth,
+          x: () => -(scrollContainer.scrollWidth - window.innerWidth),
           ease: "none",
           scrollTrigger: {
             trigger: sectionRef.current,
             pin: true,
-            scrub: 1,
+            scrub: true,
             start: "top top",
-            end: () => `+=${totalScrollWidth}`,
+            end: () => `+=${scrollContainer.scrollWidth - window.innerWidth}`,
             invalidateOnRefresh: true,
+            anticipatePin: 1,
           },
         });
       }
@@ -75,8 +76,8 @@ export default function MenuPreview() {
   }, []);
 
   return (
-    <section 
-      id="menu" 
+    <section
+      id="menu"
       ref={sectionRef}
       className="relative min-h-screen w-full bg-cream overflow-hidden py-24 flex flex-col"
     >
@@ -85,9 +86,10 @@ export default function MenuPreview() {
           A Taste Before You Arrive
         </h2>
         <p className="text-lg md:text-xl text-wine/80 max-w-2xl font-inter mb-8">
-          Multi-cuisine, full bar, and a few dishes people genuinely will not stop ordering.
+          Multi-cuisine, full bar, and a few dishes people genuinely will not
+          stop ordering.
         </p>
-        
+
         {/* Category Tabs */}
         <div className="flex flex-wrap gap-4 mb-8">
           {categories.map((cat) => (
@@ -95,8 +97,8 @@ export default function MenuPreview() {
               key={cat}
               onClick={() => setActiveCategory(cat)}
               className={`px-6 py-2 rounded-full border transition-all duration-300 font-medium ${
-                activeCategory === cat 
-                  ? "bg-wine text-cream border-wine" 
+                activeCategory === cat
+                  ? "bg-wine text-cream border-wine"
                   : "bg-transparent text-wine border-wine/30 hover:border-wine"
               }`}
             >
@@ -108,17 +110,17 @@ export default function MenuPreview() {
 
       {/* Horizontal Filmstrip */}
       <div className="flex-grow flex items-center w-full">
-        <div 
+        <div
           ref={scrollContainerRef}
           className="flex gap-8 px-6 md:px-24 pb-12 w-max"
         >
           {menuItems.map((item, i) => (
-            <div 
+            <div
               key={i}
               className="w-[300px] md:w-[400px] flex-shrink-0 group cursor-pointer"
             >
               <div className="relative w-full aspect-[4/5] rounded-2xl overflow-hidden mb-6 shadow-xl">
-                <Image 
+                <Image
                   src={item.img}
                   alt={item.name}
                   fill
@@ -140,7 +142,7 @@ export default function MenuPreview() {
         <div className="inline-flex items-center gap-2 bg-wasabi/30 text-wine font-medium px-6 py-3 rounded-xl border border-wasabi">
           <span>₹400–₹1,600 per person, depending on what you order</span>
         </div>
-        
+
         <MagneticButton className="bg-algae text-wine font-bold px-8 py-4 rounded-full text-lg hover:bg-wine hover:text-cream transition-colors duration-300">
           View Full Menu
         </MagneticButton>

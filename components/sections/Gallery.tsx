@@ -9,12 +9,12 @@ import { motion, AnimatePresence } from "framer-motion";
 gsap.registerPlugin(ScrollTrigger);
 
 const galleryImages = [
-  { id: 1, src: "https://images.unsplash.com/photo-1544148103-0773bf10d330?q=80&w=2070&auto=format&fit=crop", alt: "Drinks", aspect: "aspect-[3/4]" },
-  { id: 2, src: "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?q=80&w=2070&auto=format&fit=crop", alt: "Sunset view", aspect: "aspect-[4/5]" },
-  { id: 3, src: "https://images.unsplash.com/photo-1551504734-5ee1c4a1479b?q=80&w=2070&auto=format&fit=crop", alt: "Food", aspect: "aspect-square" },
-  { id: 4, src: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=2070&auto=format&fit=crop", alt: "Ambience", aspect: "aspect-[4/3]" },
-  { id: 5, src: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?q=80&w=2070&auto=format&fit=crop", alt: "Grill", aspect: "aspect-[3/4]" },
-  { id: 6, src: "https://images.unsplash.com/photo-1514933651103-005eec06c04b?q=80&w=1974&auto=format&fit=crop", alt: "Night view", aspect: "aspect-square" },
+  { id: 1, src: "/images/cocktails.jpg", alt: "Drinks", aspect: "aspect-[3/4]" },
+  { id: 2, src: "/images/view-2.png", alt: "Sunset view", aspect: "aspect-[4/5]" },
+  { id: 3, src: "/images/photo-3.jpg", alt: "Food", aspect: "aspect-square" },
+  { id: 4, src: "/images/ambience-1.png", alt: "Ambience", aspect: "aspect-[4/3]" },
+  { id: 5, src: "/images/ambience-2.png", alt: "Grill", aspect: "aspect-[3/4]" },
+  { id: 6, src: "/images/photo-1.jpg", alt: "Night view", aspect: "aspect-square" },
 ];
 
 export default function Gallery() {

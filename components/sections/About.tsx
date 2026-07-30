@@ -79,13 +79,11 @@ export default function About() {
         {/* Left Col: Image Parallax */}
         <div className="relative h-[60vh] md:h-[80vh] w-full rounded-2xl overflow-hidden group">
           <div ref={imageRef} className="absolute inset-[-10%] w-[120%] h-[120%]">
-            {/* Using a placeholder image for sunset/dam */}
-            <div className="w-full h-full bg-gradient-to-br from-wine via-algae to-wasabi opacity-80" />
             <Image 
-              src="https://images.unsplash.com/photo-1499696010180-025ef6e1a8f9?q=80&w=2070&auto=format&fit=crop"
+              src="/images/about.png"
               alt="Sunset view at On Da Rocks"
               fill
-              className="object-cover mix-blend-overlay opacity-50 grayscale hover:grayscale-0 transition-all duration-1000"
+              className="object-cover"
             />
           </div>
         </div>

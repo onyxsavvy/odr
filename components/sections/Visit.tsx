@@ -85,7 +85,19 @@ export default function Visit() {
         </div>
 
         {/* Map placeholder */}
-        <div className="w-full aspect-square md:aspect-video lg:aspect-square rounded-3xl overflow-hidden shadow-2xl relative bg-wine-black">
+        <a 
+          href="https://www.google.com/maps/dir/?api=1&destination=On+Da+Rocks,+Rock+Garden,+Gandhi+Nagar,+Kanke,+Ranchi,+Jharkhand+834008"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="w-full aspect-square md:aspect-video lg:aspect-square rounded-3xl overflow-hidden shadow-2xl relative bg-wine-black block group"
+        >
+          {/* Overlay to intercept clicks and add hover effect */}
+          <div className="absolute inset-0 z-10 bg-wine/0 group-hover:bg-wine/40 transition-all duration-300 flex items-center justify-center">
+             <div className="bg-cream text-wine font-bold px-6 py-3 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-4 group-hover:translate-y-0 shadow-xl">
+               Get Directions
+             </div>
+          </div>
+
           <iframe 
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14652.793262660233!2d85.31293375!3d23.414447499999998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39f4e1774e1d1b3b%3A0xc6651da0fb01b5!2sOn%20Da%20Rocks!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin" 
             width="100%" 
@@ -95,9 +107,9 @@ export default function Visit() {
             loading="lazy" 
             referrerPolicy="no-referrer-when-downgrade"
             title="ODR Location on Map"
-            className="absolute inset-0 mix-blend-luminosity opacity-80"
+            className="absolute inset-0 mix-blend-luminosity opacity-80 pointer-events-none"
           ></iframe>
-        </div>
+        </a>
 
       </div>
     </section>

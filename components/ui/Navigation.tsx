@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function Navigation() {
@@ -41,12 +42,28 @@ export default function Navigation() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [pathname]);
 
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
+    if (pathname === "/") {
+      e.preventDefault();
+      const el = document.getElementById(targetId);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  };
+
   if (pathname !== "/") {
     return (
       <nav className="fixed top-0 left-0 w-full z-50 py-4 px-6 md:px-12 bg-wine/80 backdrop-blur-md border-b border-wasabi/10">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <Link href="/" className="text-2xl font-bold text-cream font-outfit">ODR</Link>
-          <Link href="/#reserve" className="bg-algae text-wine px-6 py-2 rounded-full font-bold hover:bg-cream transition-colors">
+          <Link href="/" className="flex items-center">
+            <Image src="/images/logo.png" alt="ODR Logo" width={48} height={48} className="object-contain" />
+          </Link>
+          <Link 
+            href="/#reserve" 
+            onClick={(e) => handleNavClick(e, 'reserve')}
+            className="bg-algae text-wine px-6 py-2 rounded-full font-bold hover:bg-cream transition-colors"
+          >
             Reserve
           </Link>
         </div>
@@ -64,7 +81,9 @@ export default function Navigation() {
           transition={{ duration: 0.3 }}
           className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-5xl rounded-full bg-wine/60 backdrop-blur-lg border border-wasabi/20 px-6 py-3 flex items-center justify-between shadow-[0_4px_30px_rgba(0,0,0,0.1)]"
         >
-          <Link href="#home" className="text-xl font-bold text-cream font-outfit">ODR</Link>
+          <Link href="#home" onClick={(e) => handleNavClick(e, 'home')} className="flex items-center">
+            <Image src="/images/logo.png" alt="ODR Logo" width={40} height={40} className="object-contain" />
+          </Link>
           
           <div className="hidden md:flex items-center gap-8">
             {["About", "Experience", "Menu", "Gallery", "Events"].map((item) => {
@@ -73,6 +92,7 @@ export default function Navigation() {
                 <Link 
                   key={item} 
                   href={`#${id}`}
+                  onClick={(e) => handleNavClick(e, id)}
                   className={`text-sm font-medium transition-colors ${
                     activeSection === id ? "text-algae" : "text-wasabi hover:text-cream"
                   }`}
@@ -85,6 +105,7 @@ export default function Navigation() {
 
           <Link 
             href="#reserve" 
+            onClick={(e) => handleNavClick(e, 'reserve')}
             className="bg-algae text-wine px-6 py-2 rounded-full font-bold hover:bg-cream transition-colors text-sm"
           >
             Reserve

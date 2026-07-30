@@ -40,7 +40,27 @@ export default function Reserve() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitted(true);
-    // In a real app, integrate API here
+    
+    // Get form data
+    if (!formRef.current) return;
+    const formData = new FormData(formRef.current);
+    const name = formData.get("name");
+    const phone = formData.get("phone");
+    const date = formData.get("date");
+    const size = formData.get("size");
+    const occasion = formData.get("occasion");
+    const message = formData.get("message");
+
+    // Construct WhatsApp message
+    const waText = `Hello ODR! I would like to request a table reservation.
+*Name:* ${name}
+*Phone:* ${phone}
+*Date:* ${date}
+*Party Size:* ${size}
+${occasion ? `*Occasion:* ${occasion}\n` : ''}${message ? `*Message:* ${message}` : ''}`;
+
+    const waUrl = `https://wa.me/917361000066?text=${encodeURIComponent(waText)}`;
+    window.open(waUrl, "_blank");
   };
 
   return (
@@ -73,6 +93,7 @@ export default function Reserve() {
                 <div className="form-group flex flex-col gap-2 text-left">
                   <label htmlFor="name" className="text-cream text-sm font-medium pl-2">Name</label>
                   <input 
+                    name="name"
                     type="text" 
                     id="name" 
                     required 
@@ -83,6 +104,7 @@ export default function Reserve() {
                 <div className="form-group flex flex-col gap-2 text-left">
                   <label htmlFor="phone" className="text-cream text-sm font-medium pl-2">Phone Number</label>
                   <input 
+                    name="phone"
                     type="tel" 
                     id="phone" 
                     required 
@@ -96,6 +118,7 @@ export default function Reserve() {
                 <div className="form-group flex flex-col gap-2 text-left">
                   <label htmlFor="date" className="text-cream text-sm font-medium pl-2">Date</label>
                   <input 
+                    name="date"
                     type="date" 
                     id="date" 
                     required 
@@ -105,6 +128,7 @@ export default function Reserve() {
                 <div className="form-group flex flex-col gap-2 text-left">
                   <label htmlFor="size" className="text-cream text-sm font-medium pl-2">Party Size</label>
                   <input 
+                    name="size"
                     type="number" 
                     id="size" 
                     min="1"
@@ -119,6 +143,7 @@ export default function Reserve() {
               <div className="form-group flex flex-col gap-2 text-left">
                 <label htmlFor="occasion" className="text-cream text-sm font-medium pl-2">Occasion (optional)</label>
                 <input 
+                  name="occasion"
                   type="text" 
                   id="occasion" 
                   className="bg-wine border-2 border-transparent focus:border-algae w-full px-6 py-4 rounded-xl text-cream outline-none transition-all focus:shadow-[0_0_15px_rgba(175,162,49,0.3)] placeholder:text-wasabi/40"
@@ -129,6 +154,7 @@ export default function Reserve() {
               <div className="form-group flex flex-col gap-2 text-left">
                 <label htmlFor="message" className="text-cream text-sm font-medium pl-2">Message (optional)</label>
                 <textarea 
+                  name="message"
                   id="message" 
                   rows={3}
                   className="bg-wine border-2 border-transparent focus:border-algae w-full px-6 py-4 rounded-xl text-cream outline-none transition-all focus:shadow-[0_0_15px_rgba(175,162,49,0.3)] placeholder:text-wasabi/40 resize-none"
@@ -177,7 +203,7 @@ export default function Reserve() {
             Call Us Directly
           </a>
           <span className="hidden sm:inline text-wasabi/30">|</span>
-          <a href="#" className="flex items-center gap-2 text-wasabi hover:text-algae transition-colors">
+          <a href="https://wa.me/917361000066" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-wasabi hover:text-algae transition-colors">
             Message on WhatsApp
           </a>
         </div>

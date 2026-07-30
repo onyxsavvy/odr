@@ -91,7 +91,9 @@ export default function Hero() {
       </div>
 
       {/* 2. hero-overlay (100vh pinned) */}
-      <HeroOverlayPan />
+      <div className="hidden md:block">
+        <HeroOverlayPan />
+      </div>
     </section>
   );
 }

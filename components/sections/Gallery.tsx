@@ -28,38 +28,42 @@ export default function Gallery() {
       
       const cols = gridRef.current.children;
       
-      // Different parallax speeds for columns
-      gsap.to(cols[0], {
-        yPercent: -15,
-        ease: "none",
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top bottom",
-          end: "bottom top",
-          scrub: true,
-        }
-      });
-      
-      gsap.to(cols[1], {
-        yPercent: -30,
-        ease: "none",
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top bottom",
-          end: "bottom top",
-          scrub: true,
-        }
-      });
-      
-      gsap.to(cols[2], {
-        yPercent: -10,
-        ease: "none",
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top bottom",
-          end: "bottom top",
-          scrub: true,
-        }
+      let mm = gsap.matchMedia();
+
+      mm.add("(min-width: 768px)", () => {
+        // Different parallax speeds for columns
+        gsap.to(cols[0], {
+          yPercent: -15,
+          ease: "none",
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: true,
+          }
+        });
+        
+        gsap.to(cols[1], {
+          yPercent: -30,
+          ease: "none",
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: true,
+          }
+        });
+        
+        gsap.to(cols[2], {
+          yPercent: -10,
+          ease: "none",
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: true,
+          }
+        });
       });
     }, containerRef);
 
@@ -83,10 +87,10 @@ export default function Gallery() {
       {/* Masonry Grid with columns for parallax */}
       <div 
         ref={gridRef}
-        className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 relative z-10 h-[100vh] overflow-visible"
+        className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 relative z-10 h-auto"
       >
         {/* Col 1 */}
-        <div className="flex flex-col gap-6 md:gap-8 pt-12">
+        <div className="flex flex-col gap-6 md:gap-8 pt-0 md:pt-12">
           {galleryImages.slice(0, 2).map((img) => (
             <motion.div
               layoutId={`gallery-image-${img.id}`}
@@ -100,7 +104,7 @@ export default function Gallery() {
         </div>
         
         {/* Col 2 */}
-        <div className="flex flex-col gap-6 md:gap-8 pt-32">
+        <div className="flex flex-col gap-6 md:gap-8 pt-0 md:pt-32">
           {galleryImages.slice(2, 4).map((img) => (
             <motion.div
               layoutId={`gallery-image-${img.id}`}
@@ -114,7 +118,7 @@ export default function Gallery() {
         </div>
         
         {/* Col 3 */}
-        <div className="flex flex-col gap-6 md:gap-8 pt-24">
+        <div className="flex flex-col gap-6 md:gap-8 pt-0 md:pt-24">
           {galleryImages.slice(4, 6).map((img) => (
             <motion.div
               layoutId={`gallery-image-${img.id}`}

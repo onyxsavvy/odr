@@ -9,6 +9,7 @@ import { motion, AnimatePresence } from "framer-motion";
 export default function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("");
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
 
   useEffect(() => {
@@ -103,13 +104,65 @@ export default function Navigation() {
             })}
           </div>
 
-          <Link 
-            href="#reserve" 
-            onClick={(e) => handleNavClick(e, 'reserve')}
-            className="bg-algae text-wine px-6 py-2 rounded-full font-bold hover:bg-cream transition-colors text-sm"
-          >
-            Reserve
-          </Link>
+          <div className="flex items-center gap-4">
+            <Link 
+              href="#reserve" 
+              onClick={(e) => handleNavClick(e, 'reserve')}
+              className="hidden sm:block bg-algae text-wine px-6 py-2 rounded-full font-bold hover:bg-cream transition-colors text-sm"
+            >
+              Reserve
+            </Link>
+            
+            <button 
+              className="md:hidden flex flex-col justify-center items-center w-8 h-8 space-y-1.5 focus:outline-none"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            >
+              <span className={`block w-6 h-0.5 bg-wasabi transition-transform duration-300 ${isMobileMenuOpen ? 'rotate-45 translate-y-2' : ''}`}></span>
+              <span className={`block w-6 h-0.5 bg-wasabi transition-opacity duration-300 ${isMobileMenuOpen ? 'opacity-0' : 'opacity-100'}`}></span>
+              <span className={`block w-6 h-0.5 bg-wasabi transition-transform duration-300 ${isMobileMenuOpen ? '-rotate-45 -translate-y-2' : ''}`}></span>
+            </button>
+          </div>
+
+          <AnimatePresence>
+            {isMobileMenuOpen && (
+              <motion.div
+                initial={{ opacity: 0, y: -20, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -20, scale: 0.95 }}
+                transition={{ duration: 0.2 }}
+                className="absolute top-[120%] left-0 right-0 p-6 bg-wine/95 backdrop-blur-xl border border-wasabi/20 rounded-3xl md:hidden flex flex-col items-center gap-6 shadow-2xl"
+              >
+                {["About", "Experience", "Menu", "Gallery", "Events"].map((item) => {
+                  const id = item.toLowerCase();
+                  return (
+                    <Link 
+                      key={item} 
+                      href={`#${id}`}
+                      onClick={(e) => {
+                        handleNavClick(e, id);
+                        setIsMobileMenuOpen(false);
+                      }}
+                      className={`text-lg font-medium transition-colors ${
+                        activeSection === id ? "text-algae" : "text-wasabi hover:text-cream"
+                      }`}
+                    >
+                      {item}
+                    </Link>
+                  );
+                })}
+                <Link 
+                  href="#reserve" 
+                  onClick={(e) => {
+                    handleNavClick(e, 'reserve');
+                    setIsMobileMenuOpen(false);
+                  }}
+                  className="bg-algae text-wine px-8 py-3 rounded-full font-bold hover:bg-cream transition-colors text-lg w-full text-center mt-4"
+                >
+                  Reserve
+                </Link>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </motion.nav>
       )}
     </AnimatePresence>

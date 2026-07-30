@@ -44,34 +44,38 @@ export default function Experience() {
       const scrollContainer = scrollContainerRef.current;
       if (!scrollContainer) return;
 
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          pin: true,
-          scrub: true, // Use true for seamless 1:1 scrolling instead of 1 second delay
-          start: "top top",
-          end: () => `+=${scrollContainer.scrollWidth - window.innerWidth}`,
-          invalidateOnRefresh: true,
-          anticipatePin: 1,
-        }
-      });
+      let mm = gsap.matchMedia();
 
-      // Pin the section and horizontal scroll
-      tl.to(scrollContainer, {
-        x: () => -(scrollContainer.scrollWidth - window.innerWidth),
-        ease: "none",
-      }, 0);
+      mm.add("(min-width: 768px)", () => {
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            pin: true,
+            scrub: true,
+            start: "top top",
+            end: () => `+=${scrollContainer.scrollWidth - window.innerWidth}`,
+            invalidateOnRefresh: true,
+            anticipatePin: 1,
+          }
+        });
 
-      // Subtle 3D tilt on each card during horizontal scroll
-      cardsRef.current.forEach((card, i) => {
-        if (!card) return;
-
-        tl.to(card, {
-          rotateY: -10,
-          rotateX: 5,
-          scale: 0.95,
+        // Pin the section and horizontal scroll
+        tl.to(scrollContainer, {
+          x: () => -(scrollContainer.scrollWidth - window.innerWidth),
           ease: "none",
         }, 0);
+
+        // Subtle 3D tilt on each card during horizontal scroll
+        cardsRef.current.forEach((card, i) => {
+          if (!card) return;
+
+          tl.to(card, {
+            rotateY: -10,
+            rotateX: 5,
+            scale: 0.95,
+            ease: "none",
+          }, 0);
+        });
       });
     }, sectionRef);
 
@@ -82,7 +86,7 @@ export default function Experience() {
     <section
       id="experience"
       ref={sectionRef}
-      className="relative h-screen w-full bg-wine overflow-hidden"
+      className="relative h-screen w-full bg-wine overflow-x-auto md:overflow-hidden snap-x snap-mandatory scrollbar-hide"
     >
       <div
         ref={scrollContainerRef}
@@ -91,7 +95,7 @@ export default function Experience() {
         {experiences.map((exp, index) => (
           <div
             key={exp.id}
-            className="h-full w-screen shrink-0 flex flex-col justify-center items-center px-6 md:px-24 perspective-[1000px]"
+            className="h-full w-screen shrink-0 flex flex-col justify-center items-center px-6 md:px-24 perspective-[1000px] snap-center"
           >
             <div
               ref={(el) => {

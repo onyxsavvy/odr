@@ -56,18 +56,21 @@ export default function MenuPreview() {
       const totalScrollWidth = scrollContainer.scrollWidth - window.innerWidth;
 
       if (totalScrollWidth > 0) {
-        gsap.to(scrollContainer, {
-          x: () => -(scrollContainer.scrollWidth - window.innerWidth),
-          ease: "none",
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            pin: true,
-            scrub: true,
-            start: "top top",
-            end: () => `+=${scrollContainer.scrollWidth - window.innerWidth}`,
-            invalidateOnRefresh: true,
-            anticipatePin: 1,
-          },
+        let mm = gsap.matchMedia();
+        mm.add("(min-width: 768px)", () => {
+          gsap.to(scrollContainer, {
+            x: () => -(scrollContainer.scrollWidth - window.innerWidth),
+            ease: "none",
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              pin: true,
+              scrub: true,
+              start: "top top",
+              end: () => `+=${scrollContainer.scrollWidth - window.innerWidth}`,
+              invalidateOnRefresh: true,
+              anticipatePin: 1,
+            },
+          });
         });
       }
     }, sectionRef);
@@ -109,7 +112,7 @@ export default function MenuPreview() {
       </div>
 
       {/* Horizontal Filmstrip */}
-      <div className="flex-grow flex items-center w-full">
+      <div className="flex-grow flex items-center w-full overflow-x-auto md:overflow-visible snap-x snap-mandatory scrollbar-hide">
         <div
           ref={scrollContainerRef}
           className="flex gap-8 px-6 md:px-24 pb-12 w-max"
@@ -117,7 +120,7 @@ export default function MenuPreview() {
           {menuItems.map((item, i) => (
             <div
               key={i}
-              className="w-[300px] md:w-[400px] flex-shrink-0 group cursor-pointer"
+              className="w-[300px] md:w-[400px] flex-shrink-0 group cursor-pointer snap-center"
             >
               <div className="relative w-full aspect-[4/5] rounded-2xl overflow-hidden mb-6 shadow-xl">
                 <Image

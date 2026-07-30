@@ -71,7 +71,10 @@ export function HeroOverlayPan() {
       };
 
       // Slight delay to allow image rendering to finish for accurate height calculation
-      const initTimer = setTimeout(createScrollTrigger, 100);
+      const initTimer = setTimeout(() => {
+        createScrollTrigger();
+        ScrollTrigger.refresh();
+      }, 100);
 
       // Handle resize events to recalculate trigger end distance
       let resizeTimer: NodeJS.Timeout;

@@ -27,7 +27,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${outfit.variable} h-full antialiased scroll-smooth`}
+      className={`${inter.variable} ${outfit.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-wine text-wasabi selection:bg-algae selection:text-wine overflow-x-hidden">
         <LenisProvider>

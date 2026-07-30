@@ -127,6 +127,7 @@ export default function MenuPreview() {
                   src={item.img}
                   alt={item.name}
                   fill
+                  sizes="(max-width: 768px) 300px, 400px"
                   className="object-cover transition-transform duration-700 group-hover:scale-105"
                 />
                 <div className="absolute top-4 right-4 bg-cream/90 backdrop-blur text-wine px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">

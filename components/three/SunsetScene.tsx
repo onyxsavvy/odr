@@ -103,15 +103,11 @@ function FloatingParticles() {
   const groupRef = useRef<THREE.Group>(null);
   const { mouse } = useThree();
 
-  useFrame(() => {
+  useFrame((state, delta) => {
     if (groupRef.current) {
-      // Mouse parallax
-      gsap.to(groupRef.current.rotation, {
-        x: -mouse.y * 0.1,
-        y: mouse.x * 0.1,
-        duration: 2,
-        ease: "power2.out"
-      });
+      // Mouse parallax using damp instead of creating fresh GSAP tweens every frame
+      groupRef.current.rotation.x = THREE.MathUtils.damp(groupRef.current.rotation.x, -mouse.y * 0.1, 2, delta);
+      groupRef.current.rotation.y = THREE.MathUtils.damp(groupRef.current.rotation.y, mouse.x * 0.1, 2, delta);
     }
   });
 

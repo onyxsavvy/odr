@@ -14,6 +14,11 @@ export function LenisProvider({ children }: { children: React.ReactNode }) {
   const lenisRef = useRef<any>(null);
 
   useEffect(() => {
+    const lenis = lenisRef.current?.lenis;
+    if (lenis) {
+      lenis.on("scroll", ScrollTrigger.update);
+    }
+
     function update(time: number) {
       lenisRef.current?.lenis?.raf(time * 1000);
     }
@@ -23,12 +28,16 @@ export function LenisProvider({ children }: { children: React.ReactNode }) {
 
     return () => {
       gsap.ticker.remove(update);
+      if (lenis) {
+        lenis.off("scroll", ScrollTrigger.update);
+      }
     };
   }, []);
 
   return (
-    <ReactLenis root ref={lenisRef} autoRaf={false} options={{ lerp: 0.05, syncTouch: true }}>
+    <ReactLenis root ref={lenisRef} autoRaf={false} options={{ lerp: 0.1, syncTouch: true }}>
       {children}
     </ReactLenis>
   );
 }
+

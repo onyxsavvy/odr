@@ -32,66 +32,37 @@ export function HeroOverlayPan() {
 
       if (!section || !imgContainer) return;
 
-      const createScrollTrigger = () => {
-        // Clear any existing triggers on this section to prevent duplicates on resize
-        ScrollTrigger.getAll().forEach(st => {
-          if (st.trigger === section) st.kill();
-        });
-
-        const imgHeight = imgContainer.getBoundingClientRect().height;
-        const viewportHeight = window.innerHeight;
-        
-        // Calculate the difference between image height and viewport height
-        const scrollDistance = Math.max(0, imgHeight - viewportHeight);
-        
-        // If image is shorter than viewport, don't pin or animate vertically
-        if (scrollDistance <= 0) return;
-        
-        // On mobile, cap the extra scroll distance so it doesn't scroll excessively long
+      // Make values reactive using functions for invalidateOnRefresh
+      const getScrollDistance = () => Math.max(0, imgContainer.getBoundingClientRect().height - window.innerHeight);
+      const getPinDistance = () => {
+        const scrollDist = getScrollDistance();
         const isMobile = window.innerWidth < 768;
-        const maxScroll = viewportHeight * 1.5; 
-        const pinDistance = isMobile ? Math.min(scrollDistance, maxScroll) : scrollDistance;
-
-        gsap.fromTo(imgContainer, 
-          { y: 0 },
-          {
-            y: -scrollDistance, // Always pan to the true bottom of the image
-            ease: "none", // 1:1 scroll lock
-            scrollTrigger: {
-              trigger: section,
-              start: "top top",
-              end: `+=${pinDistance}`,
-              pin: true,
-              pinSpacing: true,
-              scrub: true,
-              invalidateOnRefresh: true,
-            }
-          }
-        );
+        return isMobile ? Math.min(scrollDist, window.innerHeight * 1.5) : scrollDist;
       };
 
-      // Slight delay to allow image rendering to finish for accurate height calculation
       const initTimer = setTimeout(() => {
-        createScrollTrigger();
-        ScrollTrigger.refresh();
+        if (getScrollDistance() > 0) {
+          gsap.fromTo(imgContainer,
+            { y: 0 },
+            {
+              y: () => -getScrollDistance(), // Reactive calculation
+              ease: "none",
+              scrollTrigger: {
+                trigger: section,
+                start: "top top",
+                end: () => `+=${getPinDistance()}`, // Reactive calculation
+                pin: true,
+                pinSpacing: true,
+                scrub: true,
+                invalidateOnRefresh: true,
+              }
+            }
+          );
+          ScrollTrigger.refresh();
+        }
       }, 100);
 
-      // Handle resize events to recalculate trigger end distance
-      let resizeTimer: NodeJS.Timeout;
-      const handleResize = () => {
-        clearTimeout(resizeTimer);
-        resizeTimer = setTimeout(() => {
-          createScrollTrigger();
-          ScrollTrigger.refresh();
-        }, 200);
-      };
-      
-      window.addEventListener("resize", handleResize);
-      return () => {
-        clearTimeout(initTimer);
-        window.removeEventListener("resize", handleResize);
-      };
-      
+      return () => clearTimeout(initTimer);
     }, sectionRef);
 
     return () => ctx.revert();

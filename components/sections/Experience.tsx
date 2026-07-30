@@ -107,6 +107,7 @@ export default function Experience() {
                 src={exp.img}
                 alt={exp.title}
                 fill
+                sizes="(max-width: 1024px) 100vw, 1024px"
                 className="object-cover transition-transform duration-1000 group-hover:scale-110"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-wine via-wine/80 to-transparent pointer-events-none" />

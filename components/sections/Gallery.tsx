@@ -9,12 +9,12 @@ import { motion, AnimatePresence } from "framer-motion";
 gsap.registerPlugin(ScrollTrigger);
 
 const galleryImages = [
-  { id: 1, src: "/images/cocktails.jpg", alt: "Drinks", aspect: "aspect-[3/4]" },
-  { id: 2, src: "/images/view-2.png", alt: "Sunset view", aspect: "aspect-[4/5]" },
-  { id: 3, src: "/images/photo-3.jpg", alt: "Food", aspect: "aspect-square" },
-  { id: 4, src: "/images/ambience-1.png", alt: "Ambience", aspect: "aspect-[4/3]" },
-  { id: 5, src: "/images/ambience-2.png", alt: "Grill", aspect: "aspect-[3/4]" },
-  { id: 6, src: "/images/photo-1.jpg", alt: "Night view", aspect: "aspect-square" },
+  { id: 1, src: "/images/gallery-1.png", alt: "Drinks", aspect: "aspect-[3/4]" },
+  { id: 2, src: "/images/gallery-2.jpg", alt: "Sunset view", aspect: "aspect-[4/5]" },
+  { id: 3, src: "/images/gallery-3.jpg", alt: "Food", aspect: "aspect-square" },
+  { id: 4, src: "/images/gallery-4.png", alt: "Ambience", aspect: "aspect-[4/3]" },
+  { id: 5, src: "/images/gallery-5.png", alt: "Grill", aspect: "aspect-[3/4]" },
+  { id: 6, src: "/images/gallery-6.png", alt: "Night view", aspect: "aspect-square" },
 ];
 
 export default function Gallery() {
